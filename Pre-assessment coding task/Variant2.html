@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<title>12x12の掛け算表</title>
+<style>
+  table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  table, th, td {
+    border: 1px solid black;
+  }
+  th, td {
+    padding: 8px;
+    text-align: center;
+  }
+  th {
+    background-color: #f0f0f0;
+  }
+  .highlight {
+    background-color: yellow;
+  }
+</style>
+</head>
+<body>
+<div id="multiplication-table"></div>
+
+<script>
+// JavaScript Code:
+class MultiplicationTable {
+  static renderTable(size = 12) {
+    const tableContainer = document.getElementById('multiplication-table');
+    let tableHTML = '<table>';
+    for (let i = 1; i <= size; i++) {
+      tableHTML += '<tr>';
+      for (let j = 1; j <= size; j++) {
+        // Use 'th' for the first row and column, otherwise 'td'
+        tableHTML += (i === 1 || j === 1) ? `<th>${i * j}</th>` : `<td>${i * j}</td>`;
+      }
+      tableHTML += '</tr>';
+    }
+    tableHTML += '</table>';
+    tableContainer.innerHTML = tableHTML;
+  }
+}
+
+// Render the multiplication table when the window loads
+window.onload = () => {
+  MultiplicationTable.renderTable();
+  // すべてのハイライトを削除する関数
+  function removeHighlights() {
+      document.querySelectorAll('td.highlight').forEach(function(td) {
+          td.classList.remove('highlight');
+      });
+  }
+
+  function highlightNumber(number) {
+      removeHighlights();
+      document.querySelectorAll('td').forEach(function(td) {
+          if (td.textContent === number.toString()) {
+              td.classList.add('highlight');
+          }
+      });
+  }
+
+  document.querySelectorAll('#multiplication-table td').forEach(function(td) {
+      td.addEventListener('click', function() {
+          highlightNumber(td.textContent);
+      });
+  });
+};
+
+</script>
+</body>
+</html>
